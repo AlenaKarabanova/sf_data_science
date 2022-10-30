@@ -1,10 +1,11 @@
 """Игра угадай число.
-Компьютер сам загадывает и угадывает число
+Компьютер сам загадывает и угадывает число. Максимальное количество попыток 20
 """
 from this import s
+from turtle import right
 import numpy as np
 def random_predict(number:int=1) -> int:
-    """Рандомно угадываем число
+    """Угадываем число через алгоритм
 
     Args:
         number(int, optional): Загаданное число. Defaults to 1.
@@ -13,10 +14,16 @@ def random_predict(number:int=1) -> int:
         int: Число попыток
     """
     count = 0
+    left_n = 1
+    right_n = 101
     while True:
         count += 1
-        predict_number = np.random.randint(1,101)#предполагаемое число
-        if number == predict_number:
+        predict_number = (left_n + right_n)//2#предполагаемое число
+        if predict_number > number:
+            right_n = predict_number
+        elif predict_number < number: 
+            left_n = predict_number
+        else:
             break#конец игры, выход из цикла
     return(count)
 def score_game(random_predict) -> int:
@@ -43,4 +50,5 @@ print(f'Количество попыток:{random_predict()}')
 
 # RUN
 
-score_game(random_predict)
+if __name__ == '__main__':
+    score_game(random_predict)
